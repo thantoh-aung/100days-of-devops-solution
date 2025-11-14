@@ -1,0 +1,28 @@
+---
+- name: install http and create index.html
+  hosts: all
+  become: yes
+  tasks:
+    - name: install httpd
+      yum: 
+        name: httpd
+        state: present
+    - name: Start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: create index.html using blockinfile
+      blockinfile: 
+        create: yes
+        path: /var/www/html/index.html
+        block: |
+          Welcome to XfusionCorp!
+
+          This is  Nautilus sample file, created using Ansible!
+
+          Please do not modify this file manually!
+
+        owner: apache
+        group: apache
+        mode: '0644'
