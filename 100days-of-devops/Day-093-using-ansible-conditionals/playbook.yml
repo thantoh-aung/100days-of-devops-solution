@@ -1,0 +1,30 @@
+--- 
+- hosts: all
+  become: yes
+  tasks:
+    - name: copy blog.txt to app server 1
+      copy:
+        src: /usr/src/dba/blog.txt
+        dest: /opt/dba/blog.txt
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user}}"
+        mode: '0644'
+      when: ansible_nodename == 'stapp01.stratos.xfusioncorp.com'
+
+    - name: copy story.txt to app server 2
+      copy:
+        src: /usr/src/dba/story.txt
+        dest: /opt/dba/story.txt
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user}}"
+        mode: '0644'
+      when: ansible_nodename == 'stapp02.stratos.xfusioncorp.com'
+
+    - name: copy media.txt to app server 3
+      copy:
+        src: /usr/src/dba/media.txt
+        dest: /opt/dba/media.txt
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user}}"
+        mode: '0644'
+      when: ansible_nodename == 'stapp03.stratos.xfusioncorp.com'
